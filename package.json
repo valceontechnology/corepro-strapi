@@ -1,0 +1,34 @@
+{
+  "name": "corepro-strapi",
+  "private": true,
+  "version": "0.1.0",
+  "description": "CorePro Products headless CMS",
+  "scripts": {
+    "develop": "strapi develop",
+    "start": "strapi start",
+    "build": "strapi build",
+    "strapi": "strapi"
+  },
+  "dependencies": {
+    "@strapi/strapi": "^4.25.0",
+    "@strapi/plugin-users-permissions": "^4.25.0",
+    "@strapi/plugin-i18n": "^4.25.0",
+    "pg": "^8.12.0",
+    "better-sqlite3": "^9.6.0"
+  },
+  "devDependencies": {
+    "@strapi/admin": "^4.25.0",
+    "@strapi/plugin-cloud": "^4.25.0"
+  },
+  "author": {
+    "name": "CorePro"
+  },
+  "strapi": {
+    "uuid": "corepro-strapi-cms"
+  },
+  "engines": {
+    "node": ">=18.0.0 <=20.x.x",
+    "npm": ">=6.0.0"
+  },
+  "license": "MIT"
+}
