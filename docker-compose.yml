@@ -1,0 +1,41 @@
+services:
+  corepro-strapi:
+    build: .
+    container_name: corepro-strapi
+    restart: unless-stopped
+    env_file: .env
+    depends_on:
+      corepro-db:
+        condition: service_healthy
+    volumes:
+      - strapi-uploads:/app/public/uploads
+    networks:
+      - capstone_local_default
+      - corepro-internal
+
+  corepro-db:
+    image: postgres:16-alpine
+    container_name: corepro-db
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - corepro-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - corepro-internal
+
+volumes:
+  corepro-pgdata:
+  strapi-uploads:
+
+networks:
+  # Shared network with Caddy — so Caddy can reverse-proxy to Strapi
+  capstone_local_default:
+    external: true
+  # Internal network — only Strapi talks to Postgres
+  corepro-internal:
+    driver: bridge
